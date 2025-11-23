@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Autorent.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Autorent.Domain.Entities
@@ -25,7 +24,7 @@ namespace Autorent.Domain.Entities
         public decimal? Price { get; set; }
 
         [Column("status")]
-        public string? Status { get; set; }
+        public BookingStatus Status { get; set; } = BookingStatus.Pending;
 
         public User User { get; set; } = null!;
         public Car Car { get; set; } = null!;
