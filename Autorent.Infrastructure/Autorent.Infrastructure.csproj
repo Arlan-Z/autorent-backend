@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Autorent.Application\Autorent.Application.csproj" />
     <ProjectReference Include="..\Autorent.Domain\Autorent.Domain.csproj" />
   </ItemGroup>
 

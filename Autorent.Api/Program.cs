@@ -1,4 +1,5 @@
 using Autorent.Infrastructure.Persistence;
+using Autorent.Infrastructure.Persistence.Seeders;
 using Autorent.Infrastructure.Services;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 );
 
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<CarService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers(); 
@@ -41,6 +43,15 @@ builder.Services
     });
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    Console.WriteLine("🌱 Running seeders (Development only)...");
+    await SeedData.Initialize(db);
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
