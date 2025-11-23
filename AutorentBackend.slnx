@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Autorent.Api/Autorent.Api.csproj" />
+  <Project Path="Autorent.Application/Autorent.Application.csproj" />
+  <Project Path="Autorent.Domain/Autorent.Domain.csproj" />
+  <Project Path="Autorent.Infrastructure/Autorent.Infrastructure.csproj" />
+</Solution>
