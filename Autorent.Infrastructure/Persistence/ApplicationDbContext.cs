@@ -18,6 +18,10 @@ namespace Autorent.Infrastructure.Persistence
             modelBuilder.Entity<Car>().ToTable("Car");
             modelBuilder.Entity<Booking>().ToTable("Booking");
 
+            modelBuilder.Entity<Booking>()
+                .Property(b => b.Status)
+                .HasConversion<string>();
+
             base.OnModelCreating(modelBuilder);
         }
     }
