@@ -86,7 +86,6 @@ Autorent.Api
 
 * .NET 8
 * Docker + Docker Compose
-* PostgreSQL 16
 * JWT Secret Key в `.env`
 
 ---
