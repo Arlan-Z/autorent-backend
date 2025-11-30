@@ -1,4 +1,5 @@
 ﻿using Autorent.Application.DTO.Booking;
+using Autorent.Application.Interfaces;
 using Autorent.Domain.Entities;
 using Autorent.Domain.Enums;
 using Autorent.Infrastructure.Persistence;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Autorent.Infrastructure.Services
 {
-    public class BookingService
+    public class BookingService : IBookingService
     {
         private readonly ApplicationDbContext _db;
 
@@ -114,6 +115,7 @@ namespace Autorent.Infrastructure.Services
             await _db.SaveChangesAsync();
             return true;
         }
+
         private async Task<Booking?> GetUserBookingEntity(int id, int userId)
         {
             return await _db.Bookings
