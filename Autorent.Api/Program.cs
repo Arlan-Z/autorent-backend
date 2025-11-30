@@ -1,3 +1,4 @@
+using Autorent.Application.Interfaces;
 using Autorent.Infrastructure.Persistence;
 using Autorent.Infrastructure.Persistence.Seeders;
 using Autorent.Infrastructure.Services;
@@ -18,9 +19,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<CarService>();
-builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers(); 

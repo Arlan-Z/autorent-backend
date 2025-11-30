@@ -1,5 +1,5 @@
 ﻿using Autorent.Application.DTO.Cars;
-using Autorent.Infrastructure.Services;
+using Autorent.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Autorent.Api.Controllers
@@ -8,37 +8,37 @@ namespace Autorent.Api.Controllers
     [Route("api/cars")]
     public class CarsController : ControllerBase
     {
-        private readonly CarService _service;
+        private readonly ICarService _carService;
 
-        public CarsController(CarService service)
+        public CarsController(ICarService carService)
         {
-            _service = service;
+            _carService = carService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok(await _service.GetAll());
+            => Ok(await _carService.GetAll());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var car = await _service.GetById(id);
+            var car = await _carService.GetById(id);
             return car == null ? NotFound() : Ok(car);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CarCreateDto dto)
-            => Ok(await _service.Create(dto));
+            => Ok(await _carService.Create(dto));
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, CarUpdateDto dto)
         {
-            var car = await _service.Update(id, dto);
+            var car = await _carService.Update(id, dto);
             return car == null ? NotFound() : Ok(car);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
-            => await _service.Delete(id) ? Ok() : NotFound();
+            => await _carService.Delete(id) ? Ok() : NotFound();
     }
 }
