@@ -1,4 +1,5 @@
-﻿using Autorent.Domain.Entities;
+﻿using Autorent.Application.Interfaces;
+using Autorent.Domain.Entities;
 using Autorent.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Autorent.Infrastructure.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly ApplicationDbContext _db;
         private readonly IConfiguration _config;
