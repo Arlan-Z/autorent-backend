@@ -1,11 +1,12 @@
 ﻿using Autorent.Application.DTO.Cars;
+using Autorent.Application.Interfaces;
 using Autorent.Domain.Entities;
 using Autorent.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Autorent.Infrastructure.Services
 {
-    public class CarService
+    public class CarService : ICarService
     {
         private readonly ApplicationDbContext _db;
 
