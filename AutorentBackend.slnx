@@ -3,4 +3,5 @@
   <Project Path="Autorent.Application/Autorent.Application.csproj" />
   <Project Path="Autorent.Domain/Autorent.Domain.csproj" />
   <Project Path="Autorent.Infrastructure/Autorent.Infrastructure.csproj" />
+  <Project Path="Autorent.Tests/Autorent.Tests.csproj" Id="fcc0eb7e-9de0-4748-8291-e675ea07be2f" />
 </Solution>
