@@ -1,4 +1,4 @@
-﻿namespace Autorent.Application.Interfaces
+﻿namespace Autorent.Domain.Interfaces
 {
     public interface IAuthService
     {

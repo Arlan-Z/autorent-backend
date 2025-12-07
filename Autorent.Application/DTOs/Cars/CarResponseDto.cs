@@ -1,4 +1,4 @@
-﻿namespace Autorent.Application.DTO.Cars
+﻿namespace Autorent.Domain.DTOs.Cars
 {
     public class CarResponseDto
     {

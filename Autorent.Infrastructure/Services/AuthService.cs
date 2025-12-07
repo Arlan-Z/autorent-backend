@@ -1,12 +1,13 @@
-﻿using Autorent.Application.Interfaces;
-using Autorent.Domain.Entities;
+﻿using Autorent.Domain.Entities;
+using Autorent.Domain.Exceptions;
+using Autorent.Domain.Interfaces;
 using Autorent.Infrastructure.Persistence;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Autorent.Infrastructure.Services
 {
@@ -24,7 +25,7 @@ namespace Autorent.Infrastructure.Services
         public async Task<string> Register(string name, string email, string password)
         {
             if (await _db.Users.AnyAsync(u => u.Email == email))
-                throw new Exception("User already exists");
+                throw new UserAlreadyExistsException("User already exists");
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
@@ -46,10 +47,10 @@ namespace Autorent.Infrastructure.Services
             var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email);
 
             if (user == null)
-                throw new Exception("Invalid email or password");
+                throw new InvalidCredentialsException("Invalid email or password");
 
             if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
-                throw new Exception("Invalid email or password");
+                throw new InvalidCredentialsException("Invalid email or password");
 
             return GenerateJwtToken(user);
         }

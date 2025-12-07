@@ -1,6 +1,6 @@
-﻿using Autorent.Application.DTO.Auth;
-using Autorent.Application.Interfaces;
-using Autorent.Infrastructure.Services;
+﻿using Autorent.Domain.DTOs.Auth;
+using Autorent.Domain.Exceptions;
+using Autorent.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Autorent.Api.Controllers
@@ -19,15 +19,37 @@ namespace Autorent.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            var result = await _authService.Register(request.Name, request.Email, request.Password);
-            return Ok(new { message = result });
+            try
+            {
+                var result = await _authService.Register(request.Name, request.Email, request.Password);
+                return Ok(new { message = result });
+            }
+            catch (UserAlreadyExistsException userEx)
+            {
+                return Conflict(new { message = userEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            var token = await _authService.Login(request.Email, request.Password);
-            return Ok(new { token });
+            try
+            {
+                var token = await _authService.Login(request.Email, request.Password);
+                return Ok(new { token });
+            }
+            catch (InvalidCredentialsException credEx)
+            {
+                return Unauthorized(new { message = "Invalid credentials", error = credEx.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Autorent.Application.DTO.Auth
+﻿namespace Autorent.Domain.DTOs.Auth
 {
     public class LoginRequest
     {

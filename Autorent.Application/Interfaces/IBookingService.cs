@@ -1,6 +1,6 @@
-﻿using Autorent.Application.DTO.Booking;
+﻿using Autorent.Domain.DTOs.Booking;
 
-namespace Autorent.Application.Interfaces
+namespace Autorent.Domain.Interfaces
 {
     public interface IBookingService
     {

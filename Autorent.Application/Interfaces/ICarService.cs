@@ -1,6 +1,6 @@
-﻿using Autorent.Application.DTO.Cars;
+﻿using Autorent.Domain.DTOs.Cars;
 
-namespace Autorent.Application.Interfaces
+namespace Autorent.Domain.Interfaces
 {
     public interface ICarService
     {

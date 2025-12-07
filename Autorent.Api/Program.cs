@@ -1,4 +1,4 @@
-using Autorent.Application.Interfaces;
+using Autorent.Domain.Interfaces;
 using Autorent.Infrastructure.Persistence;
 using Autorent.Infrastructure.Persistence.Seeders;
 using Autorent.Infrastructure.Services;
