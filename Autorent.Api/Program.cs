@@ -28,11 +28,20 @@ builder.Services.AddCors(options =>
 Env.Load();
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    )
-);
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseInMemoryDatabase("AutorentTestDb");
+    });
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
+}
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICarService, CarService>();
@@ -70,12 +79,13 @@ if (app.Environment.IsDevelopment())
     await SeedData.Initialize(db);
 }
 
+app.UseCors("CorsPolicy");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("CorsPolicy");
 
 app.Run();
 

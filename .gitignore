@@ -114,3 +114,6 @@ desktop.ini
 *.ldf
 *.mdf
 
+# Test Logs
+TestResults/
+
