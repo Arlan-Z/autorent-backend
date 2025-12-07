@@ -28,7 +28,7 @@ namespace Autorent.Infrastructure.Persistence.Seeders
                     Year = 2017,
                     PriceHour = 6,
                     PriceDay = 115,
-                    ImageUrl = "https://www.netcarshow.com/Mercedes-Benz-CLA45_S_AMG_4Matic-2020-1280-bf89f74783a866f1388cc38d904cf32f23.jpg"
+                    ImageUrl = "https://www.netcarshow.com/Volkswagen-Golf_GTD-2017-1280-e21cb13c4b5b2035cc34d62130dadd25bc.jpg"
                 },
                 new Car
                 {
@@ -37,7 +37,7 @@ namespace Autorent.Infrastructure.Persistence.Seeders
                     Year = 2005,
                     PriceHour = 2,
                     PriceDay = 46,
-                    ImageUrl = "https://www.netcarshow.com/Mercedes-Benz-CLA45_S_AMG_4Matic-2020-1280-bf89f74783a866f1388cc38d904cf32f23.jpg"
+                    ImageUrl = "https://www.netcarshow.com/Acura-RSX-2005-1280-98ed8376114fe541655a08d0903c9061db.jpg"
                 },
             };
 
