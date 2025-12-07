@@ -1,5 +1,5 @@
-﻿using Autorent.Application.DTO.Cars;
-using Autorent.Application.Interfaces;
+﻿using Autorent.Domain.DTOs.Cars;
+using Autorent.Domain.Interfaces;
 using Autorent.Domain.Entities;
 using Autorent.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

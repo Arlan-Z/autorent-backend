@@ -1,4 +1,4 @@
-﻿namespace Autorent.Application.DTO.Booking
+﻿namespace Autorent.Domain.DTOs.Booking
 {
     public class BookingCreateDto
     {

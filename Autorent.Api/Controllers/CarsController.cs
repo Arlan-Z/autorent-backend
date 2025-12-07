@@ -1,5 +1,5 @@
-﻿using Autorent.Application.DTO.Cars;
-using Autorent.Application.Interfaces;
+﻿using Autorent.Domain.DTOs.Cars;
+using Autorent.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Autorent.Api.Controllers
@@ -17,28 +17,69 @@ namespace Autorent.Api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-            => Ok(await _carService.GetAll());
+        {
+            try
+            {
+                return Ok(await _carService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var car = await _carService.GetById(id);
-            return car == null ? NotFound() : Ok(car);
+            try
+            {
+                var car = await _carService.GetById(id);
+                return car == null ? NotFound() : Ok(car);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CarCreateDto dto)
-            => Ok(await _carService.Create(dto));
+        {
+            try
+            {
+                return Ok(await _carService.Create(dto));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, CarUpdateDto dto)
         {
-            var car = await _carService.Update(id, dto);
-            return car == null ? NotFound() : Ok(car);
+            try
+            {
+                var car = await _carService.Update(id, dto);
+                return car == null ? NotFound() : Ok(car);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
-            => await _carService.Delete(id) ? Ok() : NotFound();
+        {
+            try
+            {
+                return await _carService.Delete(id) ? Ok() : NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
+        }
     }
 }

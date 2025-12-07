@@ -1,5 +1,5 @@
-﻿using Autorent.Application.DTO.Booking;
-using Autorent.Application.Interfaces;
+﻿using Autorent.Domain.DTOs.Booking;
+using Autorent.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

@@ -1,5 +1,5 @@
-﻿using Autorent.Application.DTO.Booking;
-using Autorent.Application.Interfaces;
+﻿using Autorent.Domain.DTOs.Booking;
+using Autorent.Domain.Interfaces;
 using Autorent.Domain.Entities;
 using Autorent.Domain.Enums;
 using Autorent.Infrastructure.Persistence;
