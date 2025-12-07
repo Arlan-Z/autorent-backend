@@ -1,91 +1,24 @@
-using Autorent.Domain.Interfaces;
-using Autorent.Infrastructure.Persistence;
-using Autorent.Infrastructure.Persistence.Seeders;
-using Autorent.Infrastructure.Services;
-using DotNetEnv;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Autorent.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var allowedOrigins = builder.Configuration
-    .GetSection("Cors:AllowedOrigins")
-    .Get<string[]>() ?? throw new Exception("Cors:AllowedOrigins is Missing");
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy", policy =>
-    {
-        policy
-            .WithOrigins(allowedOrigins)
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
-
-Env.Load();
-builder.Configuration.AddEnvironmentVariables();
-
-if (builder.Environment.IsEnvironment("Testing"))
-{
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    {
-        options.UseInMemoryDatabase("AutorentTestDb");
-    });
-}
-else
-{
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    {
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-    });
-}
-
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ICarService, CarService>();
-builder.Services.AddScoped<IBookingService, BookingService>();
+builder.AddEnvironment();
+builder.AddCorsConfiguration();
+builder.AddDatabase();
+builder.AddApplicationServices();
+builder.AddJwtAuthentication();
 
 builder.Services.AddAuthorization();
-builder.Services.AddControllers(); 
-
-var jwtKey = builder.Configuration["Jwt:Key"]
-    ?? throw new Exception("Jwt:Key missing");
-
-var key = Encoding.UTF8.GetBytes(jwtKey);
-
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key)
-        };
-    });
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    using var scope = app.Services.CreateScope();
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-    Console.WriteLine("🌱 Running seeders (Development only)...");
-    await SeedData.Initialize(db);
-}
+await app.UseSeeders();
 
 app.UseCors("CorsPolicy");
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-
 app.Run();
-
